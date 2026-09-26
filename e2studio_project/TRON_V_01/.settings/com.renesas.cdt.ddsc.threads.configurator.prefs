@@ -1,0 +1,16 @@
+collapse/module.arm.cmsis.dsp.2045059514=false
+collapse/module.arm.cmsis.nn.1737442275=false
+collapse/module.arm.ethosu.profiler.1220529387=false
+collapse/module.driver.display_on_glcdc.287710293=false
+collapse/module.driver.drw.1403637662=false
+collapse/module.driver.i2c_on_iic_master.1766767322=false
+collapse/module.driver.mipi_csi.1107820855=false
+collapse/module.driver.ospi_on_ospi_b.2044551670=false
+collapse/module.driver.uart_on_sci_b_uart.2100705527=false
+collapse/module.driver.uart_on_sci_b_uart.379695065=false
+collapse/module.driver.vin.1020105743=false
+collapse/module.google.tflm.core.lib.1717960002=false
+collapse/module.google.tflm.kernel.cmsis.nn.2119999542=false
+collapse/module.google.tflm.kernel.ethosu.201083820=false
+collapse/module.middleware.rm_ethosu.2014130061=false
+eclipse.preferences.version=1
