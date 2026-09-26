@@ -58,3 +58,11 @@ To monitor real-time system logs, RTOS task activity, Ethos-U55 NPU inference ti
      ```
 3. Click **OK** to connect.
 4. You will now see live debug output and performance logs streamed directly from the board over RTT without CPU overhead.
+
+> [!TIP]
+> **If the RTT Address cannot be resolved:**
+> If RTT Viewer fails to locate the control block (for instance, after modifying code and recompiling), open the linker map file:
+> ```
+> e2studio_project/TRON_V_01/Debug/TRON_V_01.map
+> ```
+> Search for **`_SEGGER_RTT`** to find its current memory address (listed under `.bss._SEGGER_RTT`, e.g., `22086d98`), and enter that address in J-Link RTT Viewer.
