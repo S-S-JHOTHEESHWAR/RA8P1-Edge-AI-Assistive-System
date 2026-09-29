@@ -19,3 +19,18 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+--------------------------------------------------------------------------------
+Third-Party and Subsystem Open Source Notices:
+--------------------------------------------------------------------------------
+1. μT-Kernel 3.0 Real-Time Operating System:
+   μT-Kernel 3.0 kernel and BSP files are copyright (c) TRON Forum and distributed
+   under the T-License 2.2 (https://www.tron.org/page-6047/).
+
+2. YOLOX Object Detection Model:
+   The base YOLOX model architecture is copyright (c) Megvii Technology Inc.
+   and distributed under the Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
+
+3. Renesas Flexible Software Package (FSP):
+   Renesas FSP drivers and HAL components are copyright (c) Renesas Electronics
+   Corporation and licensed under the Renesas Software License Agreement.

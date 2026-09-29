@@ -85,6 +85,18 @@ For in-depth analysis of how **μT-Kernel 3.0** is utilized, including the compl
 
 ---
 
+## Project Presentation (PPT)
+
+* **[Download / View Project Presentation PPT](<INSERT_PPT_LINK_HERE>)** *(Placeholder: Link will be updated upon final deck submission)*
+
+---
+
+## Prototype Demonstration Video
+
+* **[Watch Prototype Demonstration Video](<INSERT_VIDEO_LINK_HERE>)** *(Placeholder: Link will be updated upon video submission upload)*
+
+---
+
 ## Acknowledgements
 
 We would like to express our sincere gratitude to the **TRON Forum team** and **Renesas Electronics** for providing us with the opportunity to participate in the TRON Programming Contest 2026.
@@ -97,4 +109,8 @@ We sincerely thank everyone involved in organizing and supporting this contest f
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+This project is open-source software:
+* Application code, ESP32 sensor gateway firmware, RTOS tasks, and documentation are licensed under the [MIT License](./LICENSE).
+* The μT-Kernel 3.0 OS kernel and BSP files are distributed under the [T-License 2.2](https://www.tron.org/page-6047/) by TRON Forum.
+* The YOLOX-Tiny base model architecture is distributed under the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0) by Megvii Technology.
+* Renesas FSP drivers and HAL components are licensed under the Renesas Software License Agreement.
