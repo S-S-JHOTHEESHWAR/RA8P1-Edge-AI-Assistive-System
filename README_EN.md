@@ -40,7 +40,8 @@ The vision detection pipeline is built upon **YOLOX-Tiny**, optimized and quanti
 ```text
 RA8P1-Edge-AI-Assistive-System/
 ├── assets/                   # Architectural diagrams and design schematics
-│   └── system_architecture.png
+│   ├── system_architecture.png       # System Architecture Diagram (English)
+│   └── system_architecture_ja.png    # System Architecture Diagram (Japanese)
 ├── e2studio_project/         # Official Renesas e² studio workspace & project
 │   ├── README.md             # Guide: Importing, building, debugging, & RTT setup
 │   └── TRON_V_01/            # Complete e² studio project (μT-Kernel 3.0 + AI Pipeline)

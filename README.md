@@ -10,7 +10,7 @@
 
 ## システムアーキテクチャ
 
-![System Architecture](./assets/system_architecture.png)
+![System Architecture](./assets/system_architecture_ja.png)
 
 本システムは、μT-Kernel 3.0 の優先度ベース・プリエンプティブマルチタスキングを活用し、ルネサス RA8P1 のヘテロジニアス構成全体で並行かつジッターフリーなパイプラインを実行します：
 * **カメラキャプチャ:** ハードウェア CEU/VIN DMA により、CPU を介さずに 30 FPS の映像を外部 SDRAM へ直接ストリーミング転送します。
@@ -40,7 +40,8 @@
 ```text
 RA8P1-Edge-AI-Assistive-System/
 ├── assets/                   # アーキテクチャ図および設計スキーマティック
-│   └── system_architecture.png
+│   ├── system_architecture.png       # システムアーキテクチャ図 (英語)
+│   └── system_architecture_ja.png    # システムアーキテクチャ図 (日本語)
 ├── e2studio_project/         # 公式 Renesas e² studio ワークスペース＆プロジェクト
 │   ├── README.md             # ガイド: インポート、ビルド、デバッグ、およびRTT設定
 │   └── TRON_V_01/            # 完全な e² studio プロジェクト (μT-Kernel 3.0 + AIパイプライン)
