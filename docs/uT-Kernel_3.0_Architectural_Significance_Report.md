@@ -1,4 +1,4 @@
-# μT-Kernel 3.0 Real-Time Operating System: Architectural Implementation and Multitasking Report
+# μT-Kernel 3.0 Real-Time Operating System: Architectural Significance and Multitasking Report
 
 **Event-Driven Preemption, Zero-Wait Ethos-U55 NPU Offloading, and Sensor Telemetry Fusion on Renesas RA8P1 (Arm Cortex-M85)**
 
@@ -8,17 +8,17 @@
 * **Target MCU & Platform:** Renesas EK-RA8P1 (`R7FA8P1BHECBD` — Arm Cortex-M85 @ 480 MHz)
 * **Neural Processing Unit:** Arm Ethos-U55-256 MicroNPU @ 500 MHz (INT8 Tensor Offload)
 * **Operating System:** μT-Kernel 3.0 BSP 2.0 (TRON Forum, T-License 2.2 / 2.1)
-* **Downloads:**
-  * 📄 [Download Word Report (.docx)](./uT-Kernel_3.0_Usage_and_Implementation_Report.docx)
-  * 📑 [Download PDF Report (.pdf)](./uT-Kernel_3.0_Usage_and_Implementation_Report.pdf)
+* **Document Downloads:**
+  * 📄 [Download Official Word Report (.docx)](./uT-Kernel_3.0_Architectural_Significance_Report.docx)
+  * 📑 [Download Official PDF Report (.pdf)](./uT-Kernel_3.0_Architectural_Significance_Report.pdf)
 
 ---
 
-## 1. Executive Summary & Architectural Significance
+## 1. Architectural Significance & Purpose of μT-Kernel 3.0
 
 The convergence of real-time embedded systems and physical Artificial Intelligence imposes severe timing, memory, and concurrency constraints on microcontroller units (MCUs). In standard bare-metal loops, high-rate workloads such as 30 FPS video capture, 272-operator neural network graph execution, and multi-sensor UART ingestion inevitably suffer from latency jitter, dropped frames, and CPU starvation.
 
-This project implements a fully preemptive, deterministic edge AI architecture powered by **μT-Kernel 3.0 (TRON RTOS)** on the Renesas RA8P1 microcontroller. By leveraging μT-Kernel 3.0's prioritized task scheduling, lightweight event flags, and semaphore synchronization primitives, the system achieves a 100% hardware-overlapped execution pipeline:
+This report details the architectural justification, significance, and multitasking implementation of **μT-Kernel 3.0 (TRON RTOS)** on the Renesas RA8P1 microcontroller. By leveraging μT-Kernel 3.0's prioritized task scheduling, lightweight event flags, and semaphore synchronization primitives, the system achieves a 100% hardware-overlapped execution pipeline:
 
 > [!IMPORTANT]
 > **Core Architectural Achievements with μT-Kernel 3.0:**
