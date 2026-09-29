@@ -6,7 +6,7 @@ Submitted for the **TRON Programming Contest 2026**.
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 ![System Architecture](./assets/system_architecture.png)
 
@@ -18,7 +18,7 @@ The system leverages μT-Kernel 3.0 priority-preemptive multitasking to run conc
 
 ---
 
-## 🧠 AI Model Sources & Acceleration
+## AI Model Sources & Acceleration
 
 The vision detection pipeline is built upon **YOLOX-Tiny**, optimized and quantized for micro-NPUs:
 
@@ -33,7 +33,7 @@ The vision detection pipeline is built upon **YOLOX-Tiny**, optimized and quanti
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 
 ```text
 RA8P1-Edge-AI-Assistive-System/
@@ -54,7 +54,7 @@ RA8P1-Edge-AI-Assistive-System/
 
 ---
 
-## 🚀 Quick Start Guide
+## Quick Start Guide
 
 ### 1. e² studio Project Setup
 Refer to [`e2studio_project/README.md`](./e2studio_project/README.md) for full instructions:
@@ -76,9 +76,25 @@ Refer to [`sensor_gateway/README.md`](./sensor_gateway/README.md) for hardware s
 
 ---
 
-## 📑 μT-Kernel 3.0 Architectural Significance & Technical Report
+## μT-Kernel 3.0 Architectural Significance & Technical Report
 
 For in-depth analysis of how **μT-Kernel 3.0** is utilized, including the complete API catalog (`tk_*`), task priority matrices, zero-wait NPU semaphore driver binding, memory maps, and cache coherence strategies:
 
-* 📑 **[Download Official PDF Report (.pdf)](./docs/uT-Kernel_3.0_Architectural_Significance_Report.pdf)** *(Zero-Break Layout Edition)*
-* 📄 **[Online Technical Significance Report (Markdown)](./docs/uT-Kernel_3.0_Architectural_Significance_Report.md)**
+* **[Download Official PDF Report (.pdf)](./docs/uT-Kernel_3.0_Architectural_Significance_Report.pdf)** *(Zero-Break Layout Edition)*
+* **[Online Technical Significance Report (Markdown)](./docs/uT-Kernel_3.0_Architectural_Significance_Report.md)**
+
+---
+
+## Acknowledgements
+
+We would like to express our sincere gratitude to the **TRON Forum team** and **Renesas Electronics** for providing us with the opportunity to participate in the TRON Programming Contest 2026.
+
+We are grateful for the platform, resources, and support provided to explore embedded systems development and gain practical experience with the Renesas EK-RA8P1 platform and μT-Kernel 3.0. This opportunity has helped us strengthen our technical knowledge and develop our skills in embedded system design.
+
+We sincerely thank everyone involved in organizing and supporting this contest for encouraging students to learn, innovate, and contribute to the embedded systems community.
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
