@@ -6,14 +6,30 @@ Submitted for the **TRON Programming Contest 2026**.
 
 ---
 
-## 🌟 System Overview & Key Features
+## 🏗️ System Architecture
 
-* **Real-Time Vision AI:** Executes YOLOX-Tiny INT8 on the 500 MHz Arm Ethos-U55-256 MicroNPU (100% offload, 0 CPU fallback, 272/272 operators).
-* **Hard Real-Time Multitasking:** Built upon μT-Kernel 3.0 BSP 2.0 with deterministic event-flag synchronization and prioritized task scheduling.
-* **Zero-Wait NPU Execution:** Replaces driver polling loops with μT-Kernel 3.0 semaphores (`tk_wai_sem` / `tk_sig_sem`), placing the Cortex-M85 into low-power sleep during inference (0% CPU utilization).
-* **30 FPS Video Pipeline:** Parallel VIN/CEU DMA captures 30 FPS video directly into SDRAM; DAVE2D hardware engine performs zero-CPU bitmap blitting and transparent GUI overlay rendering.
-* **Environmental Sensor Gateway:** Dedicated ESP32 gateway ingests Sensirion SCD40 CO₂, temperature, and humidity data over UART without impacting camera or AI frame rates.
-* **Interactive Touch GUI:** FT5316 capacitive touchscreen interface allowing real-time switching between AI object detection view and live environmental telemetry dashboards.
+![System Architecture](./assets/system_architecture.png)
+
+The system leverages μT-Kernel 3.0 priority-preemptive multitasking to run concurrent, zero-jitter pipelines across the Renesas RA8P1 heterogeneous architecture:
+* **Camera Capture:** Hardware CEU/VIN DMA directly streams 30 FPS video into external SDRAM without CPU intervention.
+* **AI Neural Acceleration:** Arm Ethos-U55-256 NPU executes 272 INT8 tensor operators autonomously with 0% CPU load via μT-Kernel counting semaphores (`tk_wai_sem` / `tk_sig_sem`).
+* **Graphics Rendering:** Renesas DAVE2D hardware blits video frames and renders transparent GUI overlays directly to the GLCDC display.
+* **Telemetry & Touch:** Dedicated background RTOS tasks ingest Sensirion SCD40 environmental telemetry (CO₂, temperature, humidity) over UART and FT5316 capacitive touch events.
+
+---
+
+## 🧠 AI Model Sources & Acceleration
+
+The vision detection pipeline is built upon **YOLOX-Tiny**, optimized and quantized for micro-NPUs:
+
+* **Base Model Architecture & Algorithm:** [Megvii-BaseDetection/YOLOX](https://github.com/Megvii-BaseDetection/YOLOX)
+* **MCU Deployment & Quantization Reference:** [Renesas RUHMI Model Zoo — YOLOX-Tiny](https://github.com/renesas/ruhmi-model-zoo/blob/main/vision/object_detection/yolox_tiny/README.md)
+
+### Compilation & NPU Offload:
+* **Quantization:** INT8 post-training quantization with symmetric per-tensor weights and activations.
+* **Compiler:** Arm Vela compiler targeting `ethos-u55-256` with `Shared_Sram` memory configuration.
+* **NPU Execution:** **100% offload (272 of 272 operators)** run on the Arm Ethos-U55 hardware co-processor with zero CPU fallback operators.
+* **Weights Storage:** 4.36 MB compressed INT8 weights stored in external Octal-SPI Flash (`0x90000000`, `.ospi0_cs1`) executed in high-speed Octal DDR mode.
 
 ---
 
@@ -21,16 +37,17 @@ Submitted for the **TRON Programming Contest 2026**.
 
 ```text
 RA8P1-Edge-AI-Assistive-System/
+├── assets/                   # Architectural diagrams and design schematics
+│   └── system_architecture.png
 ├── e2studio_project/         # Official Renesas e² studio workspace & project
 │   ├── README.md             # Guide: Importing, building, debugging, & RTT setup
 │   └── TRON_V_01/            # Complete e² studio project (μT-Kernel 3.0 + AI Pipeline)
 ├── sensor_gateway/           # ESP32 + Sensirion SCD40 telemetry node firmware
 │   ├── README.md             # Sensor wiring, pinouts, and UART protocol specification
 │   └── sensor_gateway.ino    # Arduino sketch for CO2/Temp/Humidity broadcasting
-├── docs/                     # Specialized contest documentation and technical reports
-│   ├── uT-Kernel_3.0_Architectural_Significance_Report.md    # Online report
-│   ├── uT-Kernel_3.0_Architectural_Significance_Report.pdf   # Publication PDF
-│   └── uT-Kernel_3.0_Architectural_Significance_Report.docx  # Word document
+├── docs/                     # Technical reports and architectural justification
+│   ├── uT-Kernel_3.0_Architectural_Significance_Report.pdf   # Official PDF Report
+│   └── uT-Kernel_3.0_Architectural_Significance_Report.md    # Online Markdown Report
 ├── LICENSE                   # Open-source license
 └── README.md                 # System overview and entry portal
 ```
@@ -49,19 +66,19 @@ Refer to [`e2studio_project/README.md`](./e2studio_project/README.md) for full i
    ```
    0x22086d98
    ```
+   *(If the address does not match your build, search for `_SEGGER_RTT` in `Debug/TRON_V_01.map`)*.
 
 ### 2. Sensor Gateway Setup
 Refer to [`sensor_gateway/README.md`](./sensor_gateway/README.md) for hardware schematics and setup:
 1. Connect Sensirion SCD40 to ESP32 via I2C (SDA ➔ GPIO 22, SCL ➔ GPIO 21).
-2. Connect ESP32 UART to EK-RA8P1 Header J4 (Pin 8 RXD0, Pin 4 TXD0, Pin 19 GND).
+2. Connect ESP32 UART to EK-RA8P1 Header J4 (Pin 8 RXD0, Pin 4 TXD0, Pin 19 GND) or Pmod 2.
 3. Flash [`sensor_gateway/sensor_gateway.ino`](./sensor_gateway/sensor_gateway.ino) using the Arduino IDE.
 
 ---
 
-## 📑 μT-Kernel 3.0 Architectural Significance & Justification Report
+## 📑 μT-Kernel 3.0 Architectural Significance & Technical Report
 
 For in-depth analysis of how **μT-Kernel 3.0** is utilized, including the complete API catalog (`tk_*`), task priority matrices, zero-wait NPU semaphore driver binding, memory maps, and cache coherence strategies:
 
+* 📑 **[Download Official PDF Report (.pdf)](./docs/uT-Kernel_3.0_Architectural_Significance_Report.pdf)** *(Zero-Break Layout Edition)*
 * 📄 **[Online Technical Significance Report (Markdown)](./docs/uT-Kernel_3.0_Architectural_Significance_Report.md)**
-* 📑 **[Download Official PDF Report (.pdf)](./docs/uT-Kernel_3.0_Architectural_Significance_Report.pdf)**
-* 📝 **[Download Official Word Report (.docx)](./docs/uT-Kernel_3.0_Architectural_Significance_Report.docx)**

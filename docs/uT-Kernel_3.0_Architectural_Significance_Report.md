@@ -10,7 +10,6 @@
 
 * **Official Document Downloads:**
   * 📑 **[Download Official PDF Report (.pdf)](./uT-Kernel_3.0_Architectural_Significance_Report.pdf)** *(Zero-Break Layout Edition)*
-  * 📄 **[Download Official Word Report (.docx)](./uT-Kernel_3.0_Architectural_Significance_Report.docx)**
 
 ---
 
