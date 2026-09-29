@@ -17,7 +17,7 @@
 ## 1. Executive Summary: Core Results Achieved with μT-Kernel 3.0
 
 > [!IMPORTANT]
-> **Key Technical Outcomes for Contest Judges:**
+> **Key Technical Outcomes & System Benchmarks:**
 > * **30.0 FPS Rock-Solid Display:** Priority-preemptive scheduling decouples camera video capture & DAVE2D graphics from AI inference, delivering fluid 30 FPS video with **0 dropped frames** (vs. 11.8 FPS in bare-metal superloop).
 > * **0% CPU NPU Offload:** Replaced Arm Ethos-U bare-metal driver polling loops with μT-Kernel counting semaphores (`tk_wai_sem` / `tk_sig_sem`). The Cortex-M85 sleeps while all 272 INT8 tensor operations execute autonomously in hardware.
 > * **Zero-Lag Sensor Ingestion (< 25 ms):** Dedicated background task ingests Sensirion SCD40 CO₂/temp/humidity over UART and FT5316 touch taps without stalling the camera stream or GUI rendering.
@@ -27,9 +27,9 @@
 
 ## 2. μT-Kernel 3.0 Feature & API Utilization Matrix (Part 1: Task Control)
 
-Below is the detailed catalog of μT-Kernel 3.0 task lifecycle management APIs implemented in `TRON_V_01`:
+Below is the detailed catalog of μT-Kernel 3.0 task lifecycle management APIs implemented in `EDGESIGHT-RT`:
 
-| Category | μT-Kernel 3.0 API | Parameters / Attributes | Concrete Role & Performance Benefit in TRON_V_01 |
+| Category | μT-Kernel 3.0 API | Parameters / Attributes | Concrete Role & Performance Benefit in EDGESIGHT-RT |
 | :--- | :--- | :--- | :--- |
 | **Task Control** | `T_CTSK` | `itskpri, stksz, task, tskatr` | Task creation packet; configures priority, stack size, and `TA_HLNG \| TA_RNG0`. |
 | **Task Control** | `tk_cre_tsk()` | `(T_CTSK *pk_ctsk)` | Creates tasks in `DORMANT` state: `setup_task`, `camera_task`, `ai_task`, `esp32_task`. |
@@ -65,9 +65,9 @@ EXPORT INT usermain(void) {
 
 ## 2. μT-Kernel 3.0 Feature & API Utilization Matrix (Part 2: Synchronization)
 
-Below is the catalog of μT-Kernel 3.0 Event Flag and Semaphore synchronization primitives implemented in `TRON_V_01`:
+Below is the catalog of μT-Kernel 3.0 Event Flag and Semaphore synchronization primitives implemented in `EDGESIGHT-RT`:
 
-| Category | μT-Kernel 3.0 API | Parameters / Attributes | Concrete Role & Performance Benefit in TRON_V_01 |
+| Category | μT-Kernel 3.0 API | Parameters / Attributes | Concrete Role & Performance Benefit in EDGESIGHT-RT |
 | :--- | :--- | :--- | :--- |
 | **Event Flags** | `T_CFLG` | `flgatr = TA_TFIFO \| TA_WMUL` | Event flag creation packet with FIFO waiting queue and multi-task wait support. |
 | **Event Flags** | `tk_cre_flg()` | `(T_CFLG *pk_cflg)` | Creates synchronization flags: `cam_flg_id` (video sync) and `ai_flg_id` (AI trigger). |
@@ -199,7 +199,7 @@ int ethosu_semaphore_give(void *sem) {
 
 ---
 
-## 6. Key Production Code Excerpts from TRON_V_01
+## 6. Key Production Code Excerpts from EDGESIGHT-RT
 
 ### 1. Direct Event Flag Setting from Hardware Interrupt
 ```c
@@ -259,7 +259,7 @@ void esp32_task(INT stacd, void *exinf) {
 
 ---
 
-## 8. Summary for TRON Contest Judges
+## 8. Technical Innovation Summary & Architectural Highlights
 
 > [!TIP]
 > **Why this Submission Represents an Ideal Demonstration of μT-Kernel 3.0:**
