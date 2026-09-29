@@ -1,116 +1,119 @@
-# RA8P1 Edge AI Assistive System
+[English](./README_EN.md) | 日本語
 
-A physical real-time Edge AI assistive system deployed on the **Renesas EK-RA8P1** microcontroller, powered by **μT-Kernel 3.0 (TRON RTOS)**, **YOLOX-Tiny INT8**, and the **Arm Ethos-U55 NPU**, integrated with external sensor telemetry and hardware-accelerated 2D graphics.
+# RA8P1 エッジAIアシスティブシステム
 
-Submitted for the **TRON Programming Contest 2026**.
+ルネサス **EK-RA8P1** マイクロコントローラ上に実装された物理リアルタイム・エッジAIアシスティブシステム。**μT-Kernel 3.0（TRON RTOS）**、**YOLOX-Tiny INT8**、および **Arm Ethos-U55 NPU** を中核とし、外部センサーテレメトリおよびハードウェアアクセラレーションによる2Dグラフィックスを統合しています。
+
+**TRONプログラミングコンテスト2026** 応募作品。
 
 ---
 
-## System Architecture
+## システムアーキテクチャ
 
 ![System Architecture](./assets/system_architecture.png)
 
-The system leverages μT-Kernel 3.0 priority-preemptive multitasking to run concurrent, zero-jitter pipelines across the Renesas RA8P1 heterogeneous architecture:
-* **Camera Capture:** Hardware CEU/VIN DMA directly streams 30 FPS video into external SDRAM without CPU intervention.
-* **AI Neural Acceleration:** Arm Ethos-U55-256 NPU executes 272 INT8 tensor operators autonomously with 0% CPU load via μT-Kernel counting semaphores (`tk_wai_sem` / `tk_sig_sem`).
-* **Graphics Rendering:** Renesas DAVE2D hardware blits video frames and renders transparent GUI overlays directly to the GLCDC display.
-* **Telemetry & Touch:** Dedicated background RTOS tasks ingest Sensirion SCD40 environmental telemetry (CO₂, temperature, humidity) over UART and FT5316 capacitive touch events.
+本システムは、μT-Kernel 3.0 の優先度ベース・プリエンプティブマルチタスキングを活用し、ルネサス RA8P1 のヘテロジニアス構成全体で並行かつジッターフリーなパイプラインを実行します：
+* **カメラキャプチャ:** ハードウェア CEU/VIN DMA により、CPU を介さずに 30 FPS の映像を外部 SDRAM へ直接ストリーミング転送します。
+* **AIニューラルアクセラレーション:** Arm Ethos-U55-256 NPU が 272 個の INT8 テンソル演算を自律的に実行。μT-Kernel の計数セマフォ（`tk_wai_sem` / `tk_sig_sem`）により、推論実行中の CPU 負荷 0% を実現しています。
+* **グラフィックス描画:** ルネサス DAVE2D ハードウェアアクセラレータにより、CPU 負荷ゼロでビデオフレームのブリット（転送）および GLCDC ディスプレイへの透過 GUI オーバーレイ描画を行います。
+* **テレメトリおよびタッチ入力:** 専用のバックグラウンド RTOS タスクが、UART 経由での Sensirion SCD40 環境テレメトリ（CO₂濃度、温度、湿度）の受信および FT5316 静電容量式タッチイベントの処理を担当します。
 
 ---
 
-## AI Model Sources & Acceleration
+## AIモデルのソースとアクセラレーション
 
-The vision detection pipeline is built upon **YOLOX-Tiny**, optimized and quantized for micro-NPUs:
+ビジョン検出パイプラインは、マイクロ NPU 向けに最適化および量子化された **YOLOX-Tiny** をベースとして構築されています：
 
-* **Base Model Architecture & Algorithm:** [Megvii-BaseDetection/YOLOX](https://github.com/Megvii-BaseDetection/YOLOX)
-* **MCU Deployment & Quantization Reference:** [Renesas RUHMI Model Zoo — YOLOX-Tiny](https://github.com/renesas/ruhmi-model-zoo/blob/main/vision/object_detection/yolox_tiny/README.md)
+* **ベースモデルアーキテクチャおよびアルゴリズム:** [Megvii-BaseDetection/YOLOX](https://github.com/Megvii-BaseDetection/YOLOX)
+* **MCUデプロイおよび量子化リファレンス:** [Renesas RUHMI Model Zoo — YOLOX-Tiny](https://github.com/renesas/ruhmi-model-zoo/blob/main/vision/object_detection/yolox_tiny/README.md)
 
-### Compilation & NPU Offload:
-* **Quantization:** INT8 post-training quantization with symmetric per-tensor weights and activations.
-* **Compiler:** Arm Vela compiler targeting `ethos-u55-256` with `Shared_Sram` memory configuration.
-* **NPU Execution:** **100% offload (272 of 272 operators)** run on the Arm Ethos-U55 hardware co-processor with zero CPU fallback operators.
-* **Weights Storage:** 4.36 MB compressed INT8 weights stored in external Octal-SPI Flash (`0x90000000`, `.ospi0_cs1`) executed in high-speed Octal DDR mode.
+### コンパイルおよび NPU オフロード:
+* **量子化:** 対称パーテンソル重みおよび活性化関数を用いた INT8 学習後量子化（PTQ）。
+* **コンパイラ:** `Shared_Sram` メモリ構成にて `ethos-u55-256` をターゲットとした Arm Vela コンパイラ。
+* **NPU実行:** **全 272 オペレータ中 272 個（100% オフロード）** が Arm Ethos-U55 ハードウェアコプロセッサ上で動作し、CPU フォールバック演算はゼロです。
+* **重みストレージ:** 4.36 MB の圧縮済み INT8 重みを外部 Octal-SPI フラッシュ（`0x90000000`, `.ospi0_cs1`）に格納し、高速 Octal DDR モードで実行します。
 
 ---
 
-## Repository Structure
+## リポジトリ構造
 
 ```text
 RA8P1-Edge-AI-Assistive-System/
-├── assets/                   # Architectural diagrams and design schematics
+├── assets/                   # アーキテクチャ図および設計スキーマティック
 │   └── system_architecture.png
-├── e2studio_project/         # Official Renesas e² studio workspace & project
-│   ├── README.md             # Guide: Importing, building, debugging, & RTT setup
-│   └── TRON_V_01/            # Complete e² studio project (μT-Kernel 3.0 + AI Pipeline)
-├── sensor_gateway/           # ESP32 + Sensirion SCD40 telemetry node firmware
-│   ├── README.md             # Sensor wiring, pinouts, and UART protocol specification
-│   └── sensor_gateway.ino    # Arduino sketch for CO2/Temp/Humidity broadcasting
-├── docs/                     # Technical reports and architectural justification
-│   ├── uT-Kernel_3.0_Architectural_Significance_Report.pdf   # Official PDF Report
-│   └── uT-Kernel_3.0_Architectural_Significance_Report.md    # Online Markdown Report
-├── LICENSE                   # Open-source license
-└── README.md                 # System overview and entry portal
+├── e2studio_project/         # 公式 Renesas e² studio ワークスペース＆プロジェクト
+│   ├── README.md             # ガイド: インポート、ビルド、デバッグ、およびRTT設定
+│   └── TRON_V_01/            # 完全な e² studio プロジェクト (μT-Kernel 3.0 + AIパイプライン)
+├── sensor_gateway/           # ESP32 + Sensirion SCD40 テレメトリノードファームウェア
+│   ├── README.md             # センサー配線、ピン配置、およびUARTプロトコル仕様
+│   └── sensor_gateway.ino    # CO2/温度/湿度データ送信用 Arduinoスケッチ
+├── docs/                     # 技術レポートおよびアーキテクチャ正当化文書
+│   ├── uT-Kernel_3.0_Architectural_Significance_Report.pdf   # 公式PDFレポート
+│   └── uT-Kernel_3.0_Architectural_Significance_Report.md    # オンラインMarkdownレポート
+├── LICENSE                   # オープンソースライセンス
+├── README.md                 # システム概要およびポータル (日本語)
+└── README_EN.md              # システム概要およびポータル (英語)
 ```
 
 ---
 
-## Quick Start Guide
+## クイックスタートガイド
 
-### 1. e² studio Project Setup
-Refer to [`e2studio_project/README.md`](./e2studio_project/README.md) for full instructions:
-1. Open **e² studio** and choose **File ➔ Import ➔ General ➔ Existing Projects into Workspace**.
-2. Select [`e2studio_project/TRON_V_01`](./e2studio_project/TRON_V_01).
-3. Build the `Debug` configuration (`Ctrl + B`).
-4. Flash and debug via on-board J-Link using `TRON_V_01 Debug_Flat`.
-5. Connect **SEGGER J-Link RTT Viewer** to target `R7FA8P1BH` at RTT address:
+### 1. e² studio プロジェクトのセットアップ
+詳細な手順は [`e2studio_project/README.md`](./e2studio_project/README.md) を参照してください：
+1. **e² studio** を起動し、**ファイル ➔ インポート ➔ 一般 ➔ 既存のプロジェクトをワークスペースへ** を選択します。
+2. [`e2studio_project/TRON_V_01`](./e2studio_project/TRON_V_01) を選択します。
+3. `Debug` 構成をビルドします（`Ctrl + B`）。
+4. オンボード J-Link を使用し、`TRON_V_01 Debug_Flat` でフラッシュへの書き込みおよびデバッグを実行します。
+5. **SEGGER J-Link RTT Viewer** をターゲット `R7FA8P1BH` に接続し、以下の RTT アドレスを指定します：
    ```
    0x22086d98
    ```
-   *(If the address does not match your build, search for `_SEGGER_RTT` in `Debug/TRON_V_01.map`)*.
+   *（※ビルド環境でアドレスが異なる場合は、`Debug/TRON_V_01.map` 内の `_SEGGER_RTT` を検索してください）*。
 
-### 2. Sensor Gateway Setup
-Refer to [`sensor_gateway/README.md`](./sensor_gateway/README.md) for hardware schematics and setup:
-1. Connect Sensirion SCD40 to ESP32 via I2C (SDA ➔ GPIO 22, SCL ➔ GPIO 21).
-2. Connect ESP32 UART to EK-RA8P1 Header J4 (Pin 8 RXD0, Pin 4 TXD0, Pin 19 GND) or Pmod 2.
-3. Flash [`sensor_gateway/sensor_gateway.ino`](./sensor_gateway/sensor_gateway.ino) using the Arduino IDE.
-
----
-
-## μT-Kernel 3.0 Architectural Significance & Technical Report
-
-For in-depth analysis of how **μT-Kernel 3.0** is utilized, including the complete API catalog (`tk_*`), task priority matrices, zero-wait NPU semaphore driver binding, memory maps, and cache coherence strategies:
-
-* **[Download Official PDF Report (.pdf)](./docs/uT-Kernel_3.0_Architectural_Significance_Report.pdf)** *(Zero-Break Layout Edition)*
-* **[Online Technical Significance Report (Markdown)](./docs/uT-Kernel_3.0_Architectural_Significance_Report.md)**
+### 2. センサーゲートウェイのセットアップ
+ハードウェア接続および構成の詳細は [`sensor_gateway/README.md`](./sensor_gateway/README.md) を参照してください：
+1. Sensirion SCD40 を I2C 経由で ESP32 に接続します（SDA ➔ GPIO 22、SCL ➔ GPIO 21）。
+2. ESP32 の UART を EK-RA8P1 の拡張ヘッダー J4（Pin 8 RXD0、Pin 4 TXD0、Pin 19 GND）または Pmod 2 に接続します。
+3. Arduino IDE を使用して [`sensor_gateway/sensor_gateway.ino`](./sensor_gateway/sensor_gateway.ino) を書き込みます。
 
 ---
 
-## Project Presentation (PPT)
+## μT-Kernel 3.0 技術報告書（アーキテクチャの重要性）
 
-* **[Download / View Project Presentation PPT](<INSERT_PPT_LINK_HERE>)** *(Placeholder: Link will be updated upon final deck submission)*
+μT-Kernel 3.0 の活用方法、完全な API カタログ（`tk_*`）、タスク優先度マトリクス、セマフォによるゼロウェイト NPU ドライバ連携、メモリマップ、キャッシュコヒーレンシ戦略に関する詳細な分析については、以下を参照してください：
 
----
-
-## Prototype Demonstration Video
-
-* **[Watch Prototype Demonstration Video](<INSERT_VIDEO_LINK_HERE>)** *(Placeholder: Link will be updated upon video submission upload)*
+* **[公式PDFレポートをダウンロード (.pdf)](./docs/uT-Kernel_3.0_Architectural_Significance_Report.pdf)** *（ページ分割なし・最適化レイアウト版）*
+* **[オンライン技術報告書（Markdown）](./docs/uT-Kernel_3.0_Architectural_Significance_Report.md)**
 
 ---
 
-## Acknowledgements
+## プロジェクトプレゼンテーション（PPT）
 
-We would like to express our sincere gratitude to the **TRON Forum team** and **Renesas Electronics** for providing us with the opportunity to participate in the TRON Programming Contest 2026.
-
-We are grateful for the platform, resources, and support provided to explore embedded systems development and gain practical experience with the Renesas EK-RA8P1 platform and μT-Kernel 3.0. This opportunity has helped us strengthen our technical knowledge and develop our skills in embedded system design.
-
-We sincerely thank everyone involved in organizing and supporting this contest for encouraging students to learn, innovate, and contribute to the embedded systems community.
+* **[プロジェクトプレゼンテーション資料（PPT）を表示 / ダウンロード](<INSERT_PPT_LINK_HERE>)** *（※プレースホルダー：最終提出スライドのアップロード後にリンクが更新されます）*
 
 ---
 
-## License
+## プロトタイプ実演デモ動画
 
-This project is open-source software:
-* Application code, ESP32 sensor gateway firmware, RTOS tasks, and documentation are licensed under the [MIT License](./LICENSE).
-* The μT-Kernel 3.0 OS kernel and BSP files are distributed under the [T-License 2.2](https://www.tron.org/page-6047/) by TRON Forum.
-* The YOLOX-Tiny base model architecture is distributed under the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0) by Megvii Technology.
-* Renesas FSP drivers and HAL components are licensed under the Renesas Software License Agreement.
+* **[プロトタイプ実演デモ動画を視聴](<INSERT_VIDEO_LINK_HERE>)** *（※プレースホルダー：動画提出のアップロード後にリンクが更新されます）*
+
+---
+
+## 謝辞 (Acknowledgements)
+
+TRONプログラミングコンテスト2026への参加の機会をいただきました **TRONフォーラムの皆様**、ならびに **ルネサス エレクトロニクス株式会社様** に心より御礼申し上げます。
+
+ルネサス EK-RA8P1 プラットフォームおよび μT-Kernel 3.0 を用いた組み込みシステム開発を探求し、実践的な経験を積むためのプラットフォーム、リソース、そして手厚いサポートを提供していただきましたことに深く感謝いたします。本機会を通じて、組み込みシステム設計における技術的知識を深め、スキルを大幅に向上させることができました。
+
+学生の学習、イノベーション、そして組み込みシステムコミュニティへの貢献を温かく後押しし、本コンテストの開催と運営にご尽力いただいたすべての関係者の皆様に、心より感謝申し上げます。
+
+---
+
+## ライセンス
+
+本プロジェクトはオープンソースソフトウェアです：
+* アプリケーションコード、ESP32 センサーゲートウェイファームウェア、RTOS タスク、およびドキュメントは [MIT License](./LICENSE) に基づいてライセンス供与されています。
+* μT-Kernel 3.0 OS カーネルおよび BSP ファイルは、TRONフォーラムによる [T-License 2.2](https://www.tron.org/page-6047/) に基づいて配布されています。
+* YOLOX-Tiny ベースモデルアーキテクチャは、Megvii Technology による [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0) に基づいて配布されています。
+* ルネサス FSP ドライバおよび HAL コンポーネントは、ルネサス ソフトウェア使用許諾契約に基づいてライセンス供与されています。
