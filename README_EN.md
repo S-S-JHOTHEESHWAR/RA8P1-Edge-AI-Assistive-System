@@ -100,6 +100,8 @@ For in-depth analysis of how **μT-Kernel 3.0** is utilized, including the compl
 ## Prototype Demonstration Video
 
 * **[Watch Prototype Demonstration Video (Google Drive)](https://drive.google.com/drive/folders/1aq13WN0o9cSi9gnxYKWx7etrO9hVEVe0?usp=sharing)**
+* **[Youtube](https://www.youtube.com/watch?v=3BoIJLrtEzs)**
+  
 
 ---
 
