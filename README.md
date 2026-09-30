@@ -85,7 +85,7 @@ RA8P1-Edge-AI-Assistive-System/
 
 μT-Kernel 3.0 の活用方法、完全な API カタログ（`tk_*`）、タスク優先度マトリクス、セマフォによるゼロウェイト NPU ドライバ連携、メモリマップ、キャッシュコヒーレンシ戦略に関する詳細な分析については、以下を参照してください：
 
-* **[公式PDFレポートをダウンロード (.pdf)](./docs/uT-Kernel_3.0_Architectural_Significance_Report.pdf)** *（ページ分割なし・最適化レイアウト版）*
+* **[公式PDFレポートをダウンロード (.pdf)](./docs/uT-Kernel_3.0_Architectural_Significance_Report.pdf)** 
 * **[オンライン技術報告書（Markdown）](./docs/uT-Kernel_3.0_Architectural_Significance_Report.md)**
 
 ---
