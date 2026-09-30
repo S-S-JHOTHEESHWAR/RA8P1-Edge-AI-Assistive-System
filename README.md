@@ -49,6 +49,7 @@ RA8P1-Edge-AI-Assistive-System/
 │   ├── README.md             # センサー配線、ピン配置、およびUARTプロトコル仕様
 │   └── sensor_gateway.ino    # CO2/温度/湿度データ送信用 Arduinoスケッチ
 ├── docs/                     # 技術レポートおよびアーキテクチャ正当化文書
+│   ├── TRON_2026_Project_Presentation.pdf                   # プロジェクトプレゼンテーション資料 (スライド)
 │   ├── uT-Kernel_3.0_Architectural_Significance_Report.pdf   # 公式PDFレポート
 │   └── uT-Kernel_3.0_Architectural_Significance_Report.md    # オンラインMarkdownレポート
 ├── LICENSE                   # オープンソースライセンス
@@ -91,7 +92,7 @@ RA8P1-Edge-AI-Assistive-System/
 
 ## プロジェクトプレゼンテーション（PPT）
 
-* **[プロジェクトプレゼンテーション資料（PPT）を表示 / ダウンロード](<INSERT_PPT_LINK_HERE>)** *（※プレースホルダー：最終提出スライドのアップロード後にリンクが更新されます）*
+* **[プロジェクトプレゼンテーション資料（PDF）を表示 / ダウンロード](./docs/TRON_2026_Project_Presentation.pdf)**
 
 ---
 

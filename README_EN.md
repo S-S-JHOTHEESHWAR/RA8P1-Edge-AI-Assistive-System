@@ -49,6 +49,7 @@ RA8P1-Edge-AI-Assistive-System/
 │   ├── README.md             # Sensor wiring, pinouts, and UART protocol specification
 │   └── sensor_gateway.ino    # Arduino sketch for CO2/Temp/Humidity broadcasting
 ├── docs/                     # Technical reports and architectural justification
+│   ├── TRON_2026_Project_Presentation.pdf                   # Project presentation slides
 │   ├── uT-Kernel_3.0_Architectural_Significance_Report.pdf   # Official PDF Report
 │   └── uT-Kernel_3.0_Architectural_Significance_Report.md    # Online Markdown Report
 ├── LICENSE                   # Open-source license
@@ -91,7 +92,7 @@ For in-depth analysis of how **μT-Kernel 3.0** is utilized, including the compl
 
 ## Project Presentation (PPT)
 
-* **[Download / View Project Presentation PPT](<INSERT_PPT_LINK_HERE>)** *(Placeholder: Link will be updated upon final deck submission)*
+* **[Download / View Project Presentation PDF](./docs/TRON_2026_Project_Presentation.pdf)**
 
 ---
 
