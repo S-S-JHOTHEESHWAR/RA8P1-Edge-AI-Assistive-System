@@ -100,6 +100,7 @@ RA8P1-Edge-AI-Assistive-System/
 ## プロトタイプ実演デモ動画
 
 * **[プロトタイプ実演デモ動画を視聴（Google Drive）](https://drive.google.com/drive/folders/1aq13WN0o9cSi9gnxYKWx7etrO9hVEVe0?usp=sharing)**
+* **[（Youtube）](https://www.youtube.com/watch?v=3BoIJLrtEzs)**
 
 ---
 
