@@ -85,7 +85,7 @@ Refer to [`sensor_gateway/README.md`](./sensor_gateway/README.md) for hardware s
 
 For in-depth analysis of how **μT-Kernel 3.0** is utilized, including the complete API catalog (`tk_*`), task priority matrices, zero-wait NPU semaphore driver binding, memory maps, and cache coherence strategies:
 
-* **[Download Official PDF Report (.pdf)](./docs/uT-Kernel_3.0_Architectural_Significance_Report.pdf)** *(Zero-Break Layout Edition)*
+* **[Download Official PDF Report (.pdf)](./docs/uT-Kernel_3.0_Architectural_Significance_Report.pdf)** 
 * **[Online Technical Significance Report (Markdown)](./docs/uT-Kernel_3.0_Architectural_Significance_Report.md)**
 
 ---
