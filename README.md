@@ -93,12 +93,13 @@ RA8P1-Edge-AI-Assistive-System/
 ## プロジェクトプレゼンテーション（PPT）
 
 * **[プロジェクトプレゼンテーション資料（PDF）を表示 / ダウンロード](./docs/TRON_2026_Project_Presentation.pdf)**
+* **[Google Drive でプレゼンテーション資料（PPT / PDF）を表示](https://drive.google.com/drive/folders/1aq13WN0o9cSi9gnxYKWx7etrO9hVEVe0?usp=sharing)**
 
 ---
 
 ## プロトタイプ実演デモ動画
 
-* **[プロトタイプ実演デモ動画を視聴](<INSERT_VIDEO_LINK_HERE>)** *（※プレースホルダー：動画提出のアップロード後にリンクが更新されます）*
+* **[プロトタイプ実演デモ動画を視聴（Google Drive）](https://drive.google.com/drive/folders/1aq13WN0o9cSi9gnxYKWx7etrO9hVEVe0?usp=sharing)**
 
 ---
 

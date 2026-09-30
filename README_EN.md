@@ -93,12 +93,13 @@ For in-depth analysis of how **μT-Kernel 3.0** is utilized, including the compl
 ## Project Presentation (PPT)
 
 * **[Download / View Project Presentation PDF](./docs/TRON_2026_Project_Presentation.pdf)**
+* **[View Project Presentation on Google Drive](https://drive.google.com/drive/folders/1aq13WN0o9cSi9gnxYKWx7etrO9hVEVe0?usp=sharing)**
 
 ---
 
 ## Prototype Demonstration Video
 
-* **[Watch Prototype Demonstration Video](<INSERT_VIDEO_LINK_HERE>)** *(Placeholder: Link will be updated upon video submission upload)*
+* **[Watch Prototype Demonstration Video (Google Drive)](https://drive.google.com/drive/folders/1aq13WN0o9cSi9gnxYKWx7etrO9hVEVe0?usp=sharing)**
 
 ---
 
